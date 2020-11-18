@@ -6,7 +6,7 @@ using NLayerProject.Core.Models;
 
 namespace NLayerProject.Core.Repositories
 {
-    interface IProductRepository:IRepository<Product>
+    public interface IProductRepository:IRepository<Product>
     {
         Task<Product> GettWithCategoryByIdAsync(int productId);
     }

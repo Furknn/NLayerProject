@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NLayerProject.Core.Service
 {
-    interface IService<TEntity> where TEntity:class
+    public interface IService<TEntity> where TEntity:class
     {
         Task<TEntity> GetByIdAsync(int Id);
 
