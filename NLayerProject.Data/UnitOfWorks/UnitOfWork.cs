@@ -13,7 +13,6 @@ namespace NLayerProject.Data.UnitOfWorks
         public IProductRepository Products => _productRepository??new ProductRepository(_context);
         public ICategoryRepository Categories => _categoryRepository??new CategoryRepository(_context);
         
-
         public UnitOfWork(AppDbContext context)
         {
             this._context = context;
