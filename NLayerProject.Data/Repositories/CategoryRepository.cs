@@ -9,7 +9,7 @@ namespace NLayerProject.Data.Repositories
     {
         private AppDbContext _appDbContext => _context as AppDbContext;
 
-        public CategoryRepository(DbContext context) : base(context)
+        public CategoryRepository(AppDbContext context) : base(context)
         {
         }
 

@@ -13,7 +13,7 @@ namespace NLayerProject.Data.Repositories
         protected readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public Repository(DbContext context)
+        public Repository(AppDbContext context)
         {
             this._context = context;
             this._dbSet = context.Set<TEntity>();
@@ -29,9 +29,9 @@ namespace NLayerProject.Data.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> Where(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.Where(predicate);
+            return await _dbSet.Where(predicate).ToListAsync();
         }
 
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
@@ -54,7 +54,7 @@ namespace NLayerProject.Data.Repositories
             _dbSet.Remove(entity);
         }
 
-        public void RemoveRange(TEntity entities)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _dbSet.RemoveRange(entities);
         }
