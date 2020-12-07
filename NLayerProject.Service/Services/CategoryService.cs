@@ -10,7 +10,7 @@ using NLayerProject.Core.UnitOfWorks;
 
 namespace NLayerProject.Service.Services
 {
-    class CategoryService:Service<Category>,ICategoryService
+    public class CategoryService:Service<Category>,ICategoryService
     {
       
         public CategoryService(IUnitOfWork unitOfWork, IRepository<Category> repository) : base(unitOfWork, repository) { }
