@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using NLayerProject.Core.Models;
+﻿using NLayerProject.Core.Models;
 using NLayerProject.Core.Repositories;
 using NLayerProject.Core.Service;
 using NLayerProject.Core.UnitOfWorks;
+using System.Threading.Tasks;
 
 namespace NLayerProject.Service.Services
 {
