@@ -1,11 +1,10 @@
-using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NLayerProject.Core.Models;
 
 namespace NLayerProject.Data.Seeds
 {
-    public class CategorySeeds:IEntityTypeConfiguration<Category>
+    public class CategorySeeds : IEntityTypeConfiguration<Category>
     {
         private readonly int[] _ids;
 
@@ -13,12 +12,12 @@ namespace NLayerProject.Data.Seeds
         {
             this._ids = _ids;
         }
+
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasData(new Category { Id = _ids[0],Name = "Kalemler"},
-            new Category { Id = _ids[1],Name = "Defterler"}
+            builder.HasData(new Category {Id = _ids[0], Name = "Kalemler"},
+                new Category {Id = _ids[1], Name = "Defterler"}
             );
-            
         }
     }
 }

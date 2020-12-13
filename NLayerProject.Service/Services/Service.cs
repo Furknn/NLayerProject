@@ -1,23 +1,24 @@
-﻿using NLayerProject.Core.Repositories;
-using NLayerProject.Core.Service;
-using NLayerProject.Core.UnitOfWorks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using NLayerProject.Core.Repositories;
+using NLayerProject.Core.Service;
+using NLayerProject.Core.UnitOfWorks;
 
 namespace NLayerProject.Service.Services
 {
-    public class Service<TEntity>:IService<TEntity> where TEntity:class
+    public class Service<TEntity> : IService<TEntity> where TEntity : class
     {
-        public readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<TEntity> _repository;
+        public readonly IUnitOfWork _unitOfWork;
 
-        public Service(IUnitOfWork unitOfWork,IRepository<TEntity> repository)
+        public Service(IUnitOfWork unitOfWork, IRepository<TEntity> repository)
         {
-            this._unitOfWork = unitOfWork;
-            this._repository = repository;
+            _unitOfWork = unitOfWork;
+            _repository = repository;
         }
+
         public async Task<TEntity> GetByIdAsync(int Id)
         {
             return await _repository.GetByIdAsync(Id);
@@ -50,7 +51,6 @@ namespace NLayerProject.Service.Services
             await _repository.AddRangeAsync(entities);
             await _unitOfWork.CommitAsync();
             return entities;
-
         }
 
         public void Remove(TEntity entity)

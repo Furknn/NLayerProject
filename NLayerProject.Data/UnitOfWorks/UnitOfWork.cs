@@ -5,18 +5,20 @@ using NLayerProject.Data.Repositories;
 
 namespace NLayerProject.Data.UnitOfWorks
 {
-    public class UnitOfWork:IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        private ProductRepository _productRepository;
         private CategoryRepository _categoryRepository;
-        public IProductRepository Products => _productRepository??new ProductRepository(_context);
-        public ICategoryRepository Categories => _categoryRepository??new CategoryRepository(_context);
-        
+        private ProductRepository _productRepository;
+
         public UnitOfWork(AppDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
+
+        public IProductRepository Products => _productRepository ?? new ProductRepository(_context);
+        public ICategoryRepository Categories => _categoryRepository ?? new CategoryRepository(_context);
+
         public async Task CommitAsync()
         {
             await _context.SaveChangesAsync();

@@ -8,17 +8,17 @@ using NLayerProject.Core.Repositories;
 
 namespace NLayerProject.Data.Repositories
 {
-    public class Repository<TEntity>:IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
         public Repository(AppDbContext context)
         {
-            this._context = context;
-            this._dbSet = context.Set<TEntity>();
+            _context = context;
+            _dbSet = context.Set<TEntity>();
         }
-        
+
         public async Task<TEntity> GetByIdAsync(int Id)
         {
             return await _dbSet.FindAsync(Id);

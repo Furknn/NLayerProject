@@ -2,10 +2,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
+using NLayerProject.API.Filters;
 using NLayerProject.Core.Repositories;
 using NLayerProject.Core.Service;
 using NLayerProject.Core.UnitOfWorks;
@@ -29,33 +30,31 @@ namespace NLayerProject.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
+            services.AddScoped<ProductNotFoundFilter>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
             
-            services.AddScoped<ICategoryService,CategoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(Configuration["ConnectionStrings:SqlConSte"].ToString(),o=>o.MigrationsAssembly("NLayerProject.Data"));
+                options.UseSqlServer(Configuration["ConnectionStrings:SqlConSte"],
+                    o => o.MigrationsAssembly("NLayerProject.Data"));
             });
-            services.AddControllers();
-            services.Configure<ApiBehaviorOptions>(options =>
+            services.AddControllers(o =>
             {
-                options.SuppressModelStateInvalidFilter = true;
+                o.Filters.Add(new ValidationFilter());
             });
+            services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
 
@@ -63,10 +62,7 @@ namespace NLayerProject.API
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

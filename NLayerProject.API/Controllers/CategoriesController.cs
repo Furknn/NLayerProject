@@ -1,11 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NLayerProject.API.DTOs;
 using NLayerProject.Core.Models;
 using NLayerProject.Core.Service;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NLayerProject.API.Controllers
 {
@@ -18,8 +17,8 @@ namespace NLayerProject.API.Controllers
 
         public CategoriesController(ICategoryService categoryService, IMapper mapper)
         {
-            this._categoryService = categoryService;
-            this._mapper = mapper;
+            _categoryService = categoryService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,7 +39,7 @@ namespace NLayerProject.API.Controllers
         public async Task<IActionResult> Save(CategoryDto categoryDto)
         {
             var category = await _categoryService.AddAsync(_mapper.Map<Category>(categoryDto));
-            return Created(String.Empty, _mapper.Map<CategoryDto>(category));
+            return Created(string.Empty, _mapper.Map<CategoryDto>(category));
         }
 
         [HttpPut]

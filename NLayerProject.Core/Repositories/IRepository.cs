@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NLayerProject.Core.Repositories
 {
-    public interface IRepository<TEntity> where TEntity:class
+    public interface IRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetByIdAsync(int Id);
 
@@ -22,7 +22,7 @@ namespace NLayerProject.Core.Repositories
         void Remove(TEntity entity);
 
         void RemoveRange(IEnumerable<TEntity> entities);
-        
+
         TEntity Update(TEntity entity);
     }
 }

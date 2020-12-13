@@ -7,8 +7,9 @@ namespace NLayerProject.Core.Models
     {
         public Category()
         {
-            Products=new Collection<Product>();
+            Products = new Collection<Product>();
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }

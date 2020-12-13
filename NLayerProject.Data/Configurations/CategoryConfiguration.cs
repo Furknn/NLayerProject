@@ -4,7 +4,7 @@ using NLayerProject.Core.Models;
 
 namespace NLayerProject.Data.Configurations
 {
-    public class CategoryConfiguration:IEntityTypeConfiguration<Category>
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {

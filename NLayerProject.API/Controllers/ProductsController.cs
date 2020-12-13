@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NLayerProject.API.DTOs;
 using NLayerProject.API.Filters;
 using NLayerProject.Core.Models;
@@ -13,15 +13,15 @@ namespace NLayerProject.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IProductService _productService;
 
         public ProductsController(IProductService productService, IMapper mapper)
         {
-            this._productService = productService;
-            this._mapper = mapper;
+            _productService = productService;
+            _mapper = mapper;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -29,13 +29,14 @@ namespace NLayerProject.API.Controllers
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
+        [ServiceFilter(typeof(ProductNotFoundFilter))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var products = await _productService.GetByIdAsync(id);
             return Ok(_mapper.Map<ProductDto>(products));
         }
-        [ValidationFilter]
+
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {
@@ -50,6 +51,7 @@ namespace NLayerProject.API.Controllers
             return NoContent();
         }
 
+        [ServiceFilter(typeof(ProductNotFoundFilter))]
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
@@ -58,12 +60,12 @@ namespace NLayerProject.API.Controllers
             return NoContent();
         }
 
+        [ServiceFilter(typeof(ProductNotFoundFilter))]
         [HttpGet("{id}/category")]
         public async Task<IActionResult> GetWithCategoryById(int id)
         {
             var product = await _productService.GetWithCategoryByIdAsync(id);
             return Ok(_mapper.Map<ProductWithCategoryDto>(product));
-
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using NLayerProject.Core.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using NLayerProject.Core.Models;
 
 namespace NLayerProject.Core.Repositories
 {
-    public interface IProductRepository:IRepository<Product>
+    public interface IProductRepository : IRepository<Product>
     {
         Task<Product> GetWithCategoryByIdAsync(int productId);
     }

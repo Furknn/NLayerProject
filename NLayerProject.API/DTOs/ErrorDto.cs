@@ -6,9 +6,10 @@ namespace NLayerProject.API.DTOs
     {
         public ErrorDto()
         {
-            Errors=new List<string>();
+            Errors = new List<string>();
         }
-        public List<string> Errors { get; set;}
+
+        public List<string> Errors { get; set; }
         public int Status { get; set; }
     }
 }

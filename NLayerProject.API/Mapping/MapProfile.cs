@@ -4,7 +4,7 @@ using NLayerProject.Core.Models;
 
 namespace NLayerProject.API.Mapping
 {
-    public class MapProfile:Profile
+    public class MapProfile : Profile
     {
         public MapProfile()
         {
@@ -20,6 +20,5 @@ namespace NLayerProject.API.Mapping
             CreateMap<Product, ProductWithCategoryDto>();
             CreateMap<ProductWithCategoryDto, Product>();
         }
-        
     }
 }

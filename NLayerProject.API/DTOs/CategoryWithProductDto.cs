@@ -2,9 +2,8 @@
 
 namespace NLayerProject.API.DTOs
 {
-    public class CategoryWithProductDto:CategoryDto
+    public class CategoryWithProductDto : CategoryDto
     {
-        
         public ICollection<ProductDto> Products { get; set; }
     }
 }
