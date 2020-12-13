@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using NLayerProject.API.DTOs;
+using NLayerProject.API.Filters;
 using NLayerProject.Core.Models;
 using NLayerProject.Core.Service;
 
@@ -34,7 +35,7 @@ namespace NLayerProject.API.Controllers
             var products = await _productService.GetByIdAsync(id);
             return Ok(_mapper.Map<ProductDto>(products));
         }
-
+        [ValidationFilter]
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {

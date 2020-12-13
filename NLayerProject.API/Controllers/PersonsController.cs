@@ -30,8 +30,8 @@ namespace NLayerProject.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(Person person)
         {
-            var newperson = await _personService.AddAsync(person);
-            return Ok(newperson);
+            var newPerson = await _personService.AddAsync(person);
+            return Ok(newPerson);
         }
     }
 }
