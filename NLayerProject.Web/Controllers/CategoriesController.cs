@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NLayerProject.Core.Models;
 using NLayerProject.Core.Service;
 using NLayerProject.Web.DTOs;
+using NLayerProject.Web.Filters;
 
 namespace NLayerProject.Web.Controllers
 {
@@ -14,11 +13,13 @@ namespace NLayerProject.Web.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
-        public CategoriesController(ICategoryService categoryService,IMapper mapper)
+
+        public CategoriesController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
             _mapper = mapper;
         }
+
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetAllAsync();
@@ -34,7 +35,6 @@ namespace NLayerProject.Web.Controllers
         public async Task<IActionResult> Create(CategoryDto categoryDto)
         {
             await _categoryService.AddAsync(_mapper.Map<Category>(categoryDto));
-
             return RedirectToAction("Index");
         }
 
@@ -48,7 +48,14 @@ namespace NLayerProject.Web.Controllers
         public IActionResult Update(CategoryDto categoryDto)
         {
             _categoryService.Update(_mapper.Map<Category>(categoryDto));
+            return RedirectToAction("Index");
+        }
 
+        [ServiceFilter(typeof(CategoryNotFoundFilter))]
+        public IActionResult Delete(int id)
+        {
+            var category = _categoryService.GetByIdAsync(id).Result;
+            _categoryService.Remove(category);
             return RedirectToAction("Index");
         }
     }

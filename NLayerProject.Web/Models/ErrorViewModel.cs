@@ -1,5 +1,3 @@
-using System;
-
 namespace NLayerProject.Web.Models
 {
     public class ErrorViewModel
