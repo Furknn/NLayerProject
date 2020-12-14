@@ -6,6 +6,6 @@ namespace NLayerProject.Web.DTOs
     {
         public int Id { get; set; }
 
-        [Required] public string Name { get; set; }
+        [Required(ErrorMessage = "{0} alanı boş olamaz")] public string Name { get; set; }
     }
 }
