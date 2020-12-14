@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NLayerProject.Core.Models;
 using NLayerProject.Core.Service;
@@ -19,6 +20,8 @@ namespace NLayerProject.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            throw new Exception(
+                "Merhabalar, ben bir hatayım. Aslında burda olmamam gerek fakat Furkan beni buraya kodu test etmek için bıraktı ve unuttu. Onu görürseniz beni silmesini söyleyin lütfen");
             var persons = await _personService.GetAllAsync();
             return Ok(persons);
         }

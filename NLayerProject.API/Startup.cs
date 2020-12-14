@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLayerProject.API.Extensions;
 using NLayerProject.API.Filters;
 using NLayerProject.Core.Repositories;
 using NLayerProject.Core.Service;
@@ -33,7 +34,7 @@ namespace NLayerProject.API
             services.AddScoped<ProductNotFoundFilter>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
-            
+
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
 
@@ -44,10 +45,7 @@ namespace NLayerProject.API
                 options.UseSqlServer(Configuration["ConnectionStrings:SqlConSte"],
                     o => o.MigrationsAssembly("NLayerProject.Data"));
             });
-            services.AddControllers(o =>
-            {
-                o.Filters.Add(new ValidationFilter());
-            });
+            services.AddControllers(o => { o.Filters.Add(new ValidationFilter()); });
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
         }
 
@@ -55,6 +53,8 @@ namespace NLayerProject.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
+            app.UseCustomException();
 
             app.UseHttpsRedirection();
 
