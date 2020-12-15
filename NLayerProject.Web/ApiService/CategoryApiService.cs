@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,20 +23,18 @@ namespace NLayerProject.Web.ApiService
             var response = await _httpClient.GetAsync("https://localhost:44317/api/categories");
 
             if (response.IsSuccessStatusCode)
-            {
-                categoryDtos = JsonConvert.DeserializeObject<IEnumerable<CategoryDto>>(await response.Content.ReadAsStringAsync());
-            }
+                categoryDtos =
+                    JsonConvert.DeserializeObject<IEnumerable<CategoryDto>>(await response.Content.ReadAsStringAsync());
             else
-            {
                 categoryDtos = null;
-            }
 
             return categoryDtos;
         }
 
         public async Task<CategoryDto> AddAsync(CategoryDto categoryDto)
         {
-            var stringContent = new StringContent(JsonConvert.SerializeObject(categoryDto), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonConvert.SerializeObject(categoryDto), Encoding.UTF8,
+                "application/json");
 
             var response = await _httpClient.PostAsync("categories", stringContent);
 
@@ -48,11 +44,9 @@ namespace NLayerProject.Web.ApiService
 
                 return categoryDto;
             }
-            else
-            {
-                //loglama yap
-                return null;
-            }
+
+            //loglama yap
+            return null;
         }
 
         public async Task<CategoryDto> GetByIdAsync(int id)
@@ -60,39 +54,27 @@ namespace NLayerProject.Web.ApiService
             var response = await _httpClient.GetAsync($"categories/{id}");
 
             if (response.IsSuccessStatusCode)
-            {
                 return JsonConvert.DeserializeObject<CategoryDto>(await response.Content.ReadAsStringAsync());
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public async Task<bool> Update(CategoryDto categoryDto)
         {
-            var stringContent = new StringContent(JsonConvert.SerializeObject(categoryDto), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonConvert.SerializeObject(categoryDto), Encoding.UTF8,
+                "application/json");
 
             var response = await _httpClient.PutAsync("categories", stringContent);
 
             if (response.IsSuccessStatusCode)
-            {
                 return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public async Task<bool> Remove(int id)
         {
             var response = await _httpClient.DeleteAsync($"categories/{id}");
 
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
+            if (response.IsSuccessStatusCode) return true;
             {
                 return false;
             }

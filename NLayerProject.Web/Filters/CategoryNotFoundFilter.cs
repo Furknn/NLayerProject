@@ -2,24 +2,24 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NLayerProject.Core.Service;
+using NLayerProject.Web.ApiService;
 using NLayerProject.Web.DTOs;
 
 namespace NLayerProject.Web.Filters
 {
     public class CategoryNotFoundFilter : ActionFilterAttribute
     {
-        private readonly ICategoryService _categoryService;
+        private readonly CategoryApiService _categoryApiService;
 
-        public CategoryNotFoundFilter(ICategoryService categoryService)
+        public CategoryNotFoundFilter(CategoryApiService categoryApiService)
         {
-            _categoryService = categoryService;
+            _categoryApiService = categoryApiService;
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var id = (int) context.ActionArguments.Values.FirstOrDefault();
-            var product = await _categoryService.GetByIdAsync(id);
+            var product = await _categoryApiService.GetByIdAsync(id);
 
             if (product != null)
             {
