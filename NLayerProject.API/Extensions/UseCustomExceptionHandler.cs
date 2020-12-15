@@ -1,7 +1,7 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using NLayerProject.API.DTOs;
 
 namespace NLayerProject.API.Extensions
@@ -23,7 +23,7 @@ namespace NLayerProject.API.Extensions
                         var errorDto = new ErrorDto {Status = 500};
                         errorDto.Errors.Add(ex.Message);
 
-                        await context.Response.WriteAsync(JsonSerializer.Serialize(errorDto));
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(errorDto));
                     }
                 });
             });
